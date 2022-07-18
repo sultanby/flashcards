@@ -18,5 +18,5 @@ const cardsSlice = createSlice({
 });
 
 export const selectCards = state => state.cards.cards;
-export const {addTopic, addQuizId} = cardsSlice.actions;
+export const { addCard } = cardsSlice.actions;
 export default cardsSlice.reducer;

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import ROUTES from "../app/routes";
 import { selectTopics } from "../features/topics/TopicsSlice";
 import { thunkAddQuizCreator } from "../features/quizzes/QuizzesSlice";
+import CardsSlice, { addCard } from "../features/cards/CardsSlice";
 
 export default function NewQuizForm() {
   const [name, setName] = useState("");
@@ -21,14 +22,22 @@ export default function NewQuizForm() {
     }
 
     const cardIds = [];
+    cards.forEach((card) => {
+      let cardId = uuidv4();
+      cardIds.push(cardId);
+      dispatch(addCard({
+        id: cardId,
+        front: card.front,
+        back: card.back
+      }));
+    });
+
     dispatch(thunkAddQuizCreator({
       id: uuidv4(),
       name: name,
       topicId: topicId,
       cardIds: cardIds
     }));
-    // create the new cards here and add each card's id to cardIds
-    // create the new quiz here
 
     history.push(ROUTES.quizzesRoute());
   };
